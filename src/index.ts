@@ -16,34 +16,39 @@ client.connect();
 // Test the Redis connection
 async function testRedis() {
     try {
-      await client.set('key', 'value');
-      const value = await client.get('key');
-      console.log(value); // should log 'value'
+        await client.set('key', 'value');
+        const value = await client.get('key');
+        console.log(value); // should log 'value'
     } catch (err) {
-      console.error('Error:', err);
+        console.error('Error:', err);
     } finally {
-      client.quit();
+        client.quit();
     }
-  }
-  
-  testRedis();
+}
+
+testRedis();
 
 // Rate limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-  message: 'Too many requests from this IP, please try again after 15 minutes'
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+    message: 'Too many requests from this IP, please try again after 15 minutes'
 });
 
 app.use(limiter);
 app.use(bodyParser.json());
 app.use('/api/url', urlRouter);
 
+// Add the root route
+app.get('/', (req, res) => {
+    res.send('Welcome to the URL Shortener API');
+});
+
 mongoose.set('strictQuery', false);
 mongoose.connect('mongodb://localhost:27017/scissor')
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.log(err));
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });

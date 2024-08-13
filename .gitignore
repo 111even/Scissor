@@ -23,8 +23,8 @@ dump.rdb
 appendonly.aof
 
 # Build output
-dist/
-build/
+//dist/
+//build/
 
 # System files
 .DS_Store

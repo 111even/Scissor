@@ -8,25 +8,17 @@ import redisClient from '../redisClient';
 const baseUrl = 'http://localhost:3000/api/url';
 
 export const shortenUrl = async (req: Request, res: Response) => {
-  const { longUrl, customCode } = req.body;
+  const { longUrl } = req.body; // Only use longUrl, remove customCode
 
   // Check if the long URL is valid
   if (!validUrl.isUri(longUrl)) {
     return res.status(400).json('Invalid URL');
   }
 
-  // Generate or use custom code
-  const urlCode = customCode || shortid.generate();
+  // Generate a unique code
+  const urlCode = shortid.generate();
 
   try {
-    // Check if the custom code is already taken
-    if (customCode) {
-      const existingUrl = await Url.findOne({ urlCode });
-      if (existingUrl) {
-        return res.status(400).json('Custom URL code already exists');
-      }
-    }
-
     // Check Redis cache for the long URL
     const cachedUrl = await redisClient.get(longUrl);
     if (cachedUrl) {

@@ -5,6 +5,6 @@ const router = Router();
 
 router.post('/shorten', shortenUrl);
 router.get('/:code', getUrl);
-router.post('/qrcode', getAllUrls);
+router.get('/qrcode', getAllUrls);
 
 export { router as urlRouter };

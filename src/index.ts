@@ -1,5 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import { urlRouter } from './routes/urlRoutes';
 import rateLimit from 'express-rate-limit';
@@ -21,8 +20,6 @@ async function testRedis() {
         console.log(value); // should log 'value'
     } catch (err) {
         console.error('Error:', err);
-    } finally {
-        client.quit();
     }
 }
 
@@ -36,8 +33,8 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
-app.use(bodyParser.json());
-app.use('/api/url', urlRouter);
+app.use(express.json());
+app.use('/api', urlRouter);
 
 // Add the root route
 app.get('/', (req, res) => {

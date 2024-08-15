@@ -1,6 +1,11 @@
 import Redis from 'ioredis';
 
-const redisClient = new Redis();
+// Use environment variables for Redis connection configuration
+const redisClient = new Redis({
+  host: process.env.REDIS_HOST || '127.0.0.1', // Provide a fallback string
+  port: parseInt(process.env.REDIS_PORT || '6380', 10), // Ensure port is always a number
+  password: process.env.REDIS_PASSWORD || '', // Provide a fallback string
+});
 
 redisClient.on('connect', () => {
   console.log('Connected to Redis');

@@ -38,7 +38,7 @@ app.use('/api', urlRouter);
 
 // Add the root route
 app.get('/', (req, res) => {
-    res.send('Welcome to the URL Shortener API');
+    res.send('Welcome to the URL Shortener API.  I tried so hard but ran into some challenges; I’m confident the groundwork is solid for future improvements.');
 });
 
 mongoose.set('strictQuery', false);

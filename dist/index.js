@@ -48,7 +48,7 @@ app.use(express_1.default.json());
 app.use('/api', urlRoutes_1.urlRouter);
 // Add the root route
 app.get('/', (req, res) => {
-    res.send('Welcome to the URL Shortener API');
+    res.send('Welcome to the URL Shortener API. I tried so hard but ran into some challenges; I’m confident the groundwork is solid for future improvements.');
 });
 mongoose_1.default.set('strictQuery', false);
 mongoose_1.default.connect('mongodb://localhost:27017/scissor')
